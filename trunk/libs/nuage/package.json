@@ -1,0 +1,12 @@
+{
+    "name" : "nuage",
+    "description" : "A Simple and flexible MVC framework-",
+    "version" : "0.0.1",
+    "contributors": [
+        { "name": "Stephan Bruny", "email": "stephan.bruny@ekumo.de" }
+    ],
+    "dependencies": {
+    },
+    "engines" : { "node": ">= 0.4.6" },
+    "main" : "./nuage.js"
+}

@@ -1,0 +1,95 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><%= title %></title>
+
+        <!-- ** CSS ** -->
+        <!-- base library -->
+        <link rel="stylesheet" type="text/css" href="htdocs/js/extjs/resources/css/ext-all.css" />
+        <link rel="stylesheet" type="text/css" href="htdocs/css/styles.css" />
+        <!-- overrides to base library -->
+
+
+        <!-- ** Javascript ** -->
+        <!-- ExtJS library: base/adapter -->
+        <script type="text/javascript" src="htdocs/js/extjs/adapter/ext/ext-base.js"></script>
+        <!-- ExtJS library: all widgets -->
+        <script type="text/javascript" src="htdocs/js/extjs/ext-all-debug.js"></script>
+
+
+        <!-- overrides to library -->
+
+        <!-- extensions -->
+        <script type="text/javascript" src="htdocs/js/extjs/startmenu.js"></script>
+        <!-- page specific -->
+
+        <script type="text/javascript">
+            Ext.onReady(function() {
+                var startMenu = new Ext.ux.StartMenu({
+                    iconCls: 'user',
+                    height: 300,
+                    shadow: true,
+                    title: '<%= title %>',
+                    width: 250
+                });
+
+                startMenu.add({
+                    text: 'Grid Window',
+                     iconCls:'icon-grid',
+                     handler : this.createWindow,
+                     scope: this
+                });
+
+                startMenu.addTool({
+                    text: 'Abmelden',
+                    handler: function() {
+                        Ext.Msg.show(
+                        { 
+                            title: 'Abmelden',
+                            msg:   'Sind Sie sicher, dass Sie die Sitzung beenden wollen?',
+                            buttons: Ext.Msg.YESNO,
+                            icon: Ext.MessageBox.QUESTION,
+                            fn: function(button) {
+                                debugger;
+                                if (button == 'yes') {
+                                    Ext.Ajax.request({
+                                       url: 'auth/logout',
+                                       success: function() {
+                                           window.location.reload();
+                                       },
+                                       failure: function() {
+                                           
+                                       }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+
+                var taskBar = new Ext.Panel({
+                    autoWidth: true,
+                    height: 36,
+                    border: true,
+                    frame: true,
+                    layout:'column',
+                    applyTo: 'x-taskbar',
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'Start',
+                            width: 150,
+                            menu: startMenu
+                        }
+                    ]
+                });
+            });
+        </script>
+
+    </head>
+    <body class="desktop">
+        <div id="x-taskbar"></div>
+        <div id="x-desktop">
+        </div>
+    </body>
+</html>
