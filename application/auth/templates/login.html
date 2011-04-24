@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title id='title'>Login</title>
+
+        <!-- ** CSS ** -->
+        <!-- base library -->
+        <link rel="stylesheet" type="text/css" href="htdocs/js/extjs/resources/css/ext-all.css" />
+        <link rel="stylesheet" type="text/css" href="htdocs/css/styles.css" />
+        <!-- overrides to base library -->
+
+
+        <!-- ** Javascript ** -->
+        <!-- ExtJS library: base/adapter -->
+        <script type="text/javascript" src="htdocs/js/extjs/adapter/ext/ext-base.js"></script>
+        <!-- ExtJS library: all widgets -->
+        <script type="text/javascript" src="htdocs/js/extjs/ext-all-debug.js"></script>
+
+
+        <!-- overrides to library -->
+
+        <!-- extensions -->
+
+        <!-- page specific -->
+
+        <script type="text/javascript">
+
+            var loginForm = new Ext.FormPanel({
+                url: 'auth/login',
+                frame: true,
+                title: 'Bitte geben Sie Benutzernamen und Passwort ein, um sich anzumelden.',
+                defaultType: 'textfield',
+                items: [
+                    {
+                        fieldLabel: 'Benutzername',
+                        name: 'loginFormUsername',
+                        allowBlank: false
+                    },
+                    {
+                        fieldLabel: 'Passwort',
+                        name: 'loginFormPassword',
+                        inputType: 'password',
+                        allowBlank: false
+                    }
+                ],
+                buttons: [
+                    {
+                        text: 'Anmelden',
+                        formBind: true,
+                        handler: function() {
+                           loginForm.getForm().submit({
+                               method: 'POST',
+                               waitTitle: 'Anmeldung',
+                               waitMsg: 'Anmeldedaten werden gesendet...',
+
+                               success: function(e, data) {
+                                   Ext.Msg.alert('Erfolg', (data.message) ? data.message : 'Sie wurden am System angemeldet!');
+                                   window.location.reload();
+                               },
+                               failure: function() {
+                                   Ext.Msg.alert('Fehler', 'Bitte überprüfen Sie Ihre Eingaben.');
+                                   loginForm.getForm().reset();
+                               }
+                           })
+                        }
+                    }
+                ]
+            });
+
+            // Path to the blank image should point to a valid location on your server
+            Ext.onReady(function(){
+
+                win = new Ext.Window({
+                    layout:'fit',
+                    width:300,
+                    height:150,
+                    // closeAction:'hide',
+                    plain: true,
+                    closable: false,
+                    resizable: false,
+                    border: false,
+                    items: [
+                        loginForm
+                    ]
+                });
+
+                win.show();
+
+            }); //end onReady
+        </script>
+
+    </head>
+    <body>
+
+    </body>
+</html>

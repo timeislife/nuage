@@ -1,0 +1,45 @@
+{
+    "modules": [
+        {
+            "name": "user",
+            "display": {
+                "deu": "Benutzerverwaltung",
+                "eng": "User Administration"
+            },
+            "actions": [
+                {
+                    "name": "getallusers",
+                    "action": "actions/getallusers",
+                    "display": {
+                        "deu": "Nutzer anzeigen",
+                        "eng": "Show users"
+                    }
+                },
+                {
+                    "name": "adduser",
+                    "action": "actions/adduser",
+                    "display": {
+                        "deu": "Benutzer hinzufügen",
+                        "eng": "Add User"
+                    }
+                },
+                {
+                    "name": "removeuser",
+                    "action": "actions/removeuser",
+                    "display": {
+                        "deu": "Benutzer löschen",
+                        "eng": "Remove User"
+                    }
+                },
+                {
+                    "name": "edituser",
+                    "action": "actions/edituser",
+                    "display": {
+                        "deu": "Benutzer bearbeiten",
+                        "eng": "Edit User"
+                    }
+                }
+            ]
+        }
+    ]
+}

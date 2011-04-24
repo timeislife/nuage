@@ -1,0 +1,26 @@
+/* 
+    Document   : styles
+    Created on : 22.04.2011, 21:36:25
+    Author     : Stephan
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+body {
+    background-color: #F8F8F8;
+    font-family:sans-serif;
+    font-size: 11px;
+}
+
+body.desktop {
+    background-image: url('../images/backgrounds/blue.jpg');
+}

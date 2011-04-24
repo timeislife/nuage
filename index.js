@@ -1,0 +1,1 @@
+require('./application/index.js');

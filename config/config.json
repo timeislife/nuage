@@ -1,0 +1,53 @@
+{
+    "server": {
+        "adress": "192.168.56.101",
+        "port": "8080",
+        "name": "Bunnyhop"
+    },
+    "directories": {
+        "application": "/home/stephan/host/Projects/Easteregg/application/",
+        "libraries": "/home/stephan/host/Projects/Easteregg/libs/",
+        "modules": "/home/stephan/host/Projects/Easteregg/libs/node_modules/"
+    },
+    "routes": [
+        {
+            "name": "index",
+            "pattern": "^\\/$",
+            "action": "index/index.js"
+        },
+        {
+            "name": "login",
+            "pattern": "^\\/login$",
+            "action": "auth/index.js"
+        },
+        {
+            "name": "auth_user",
+            "pattern": "^\\/auth\\/login$",
+            "action": "auth/login.js"
+        },
+        {
+            "name": "auth_user_logout",
+            "pattern": "^\\/auth\\/logout(\\?.+)?",
+            "action": "auth/logout.js"
+        },
+        {
+            "name": "media",
+            "pattern": "\\/htdocs\\/",
+            "action": "media/getmedia.js"
+        },
+        {
+            "name": "admin",
+            "pattern": "\\/admin$",
+            "action": "admin/index.js"
+        }
+    ],
+    "logfile": "/home/stephan/host/Projects/Easteregg/logs/info.log",
+    "database": {
+        "name": "bunnyhopp",
+        "type": "couchdb",
+        "host": "localhost",
+        "port": "5984",
+        "username": "admin",
+        "password": "r3Dbull"
+    }
+}
