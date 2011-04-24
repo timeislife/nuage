@@ -7,6 +7,8 @@
         <!-- base library -->
         <link rel="stylesheet" type="text/css" href="htdocs/js/extjs/resources/css/ext-all.css" />
         <link rel="stylesheet" type="text/css" href="htdocs/css/styles.css" />
+        <link rel="stylesheet" type="text/css" href="htdocs/css/icons.css" />
+
         <!-- overrides to base library -->
 
 
@@ -24,24 +26,58 @@
         <!-- page specific -->
 
         <script type="text/javascript">
+            // var moduleWindows = [];
             Ext.onReady(function() {
                 var startMenu = new Ext.ux.StartMenu({
                     iconCls: 'user',
                     height: 300,
                     shadow: true,
-                    title: '<%= title %>',
-                    width: 250
+                    // title: '<%= title %>',
+                    width: 320
                 });
 
-                startMenu.add({
-                    text: 'Grid Window',
-                     iconCls:'icon-grid',
-                     handler : this.createWindow,
-                     scope: this
+                 Ext.Ajax.request({
+                   url: 'modules',
+                   success: function(response) {
+                       var decoded = JSON.parse(response.responseText);
+                       Ext.each(decoded.modules, function(module) {
+                          startMenu.add({
+                               text: module.display.deu,
+                               iconCls: module.icon,
+                               handler: function() {
+                                   var window = new Ext.Window({
+                                       width: 600,
+                                       height: 400,
+                                       title: module.display.deu,
+                                       collapsible: true,
+                                       maximizable: true,
+                                       iconCls: module.icon
+
+                                   });
+                                   // moduleWindows.push(window);
+                                   window.show();
+                               }
+                           });
+                       });
+                   }
                 });
 
                 startMenu.addTool({
+                    text: 'Administration',
+                    iconCls: 'admin-icon',
+                    handler: function() {
+                    }
+                });
+
+                startMenu.addTool({
+                    text: 'Einstellungen',
+                    iconCls: 'options-icon',
+                    handler: function() {
+                    }
+                });
+                startMenu.addTool({
                     text: 'Abmelden',
+                    iconCls: 'logout-icon',
                     handler: function() {
                         Ext.Msg.show(
                         { 
@@ -50,7 +86,6 @@
                             buttons: Ext.Msg.YESNO,
                             icon: Ext.MessageBox.QUESTION,
                             fn: function(button) {
-                                debugger;
                                 if (button == 'yes') {
                                     Ext.Ajax.request({
                                        url: 'auth/logout',

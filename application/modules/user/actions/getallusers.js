@@ -1,14 +1,18 @@
 var nuage = require('nuage');
+var cradle = require('cradle');
 
 exports.loginRequired = function() {
     return true;
 }
 
 exports.execute = function(request, response) {
-    nuage.json.load(__dirname + '/config/config.json', function(config) {
-        response.writeHead(200);
-        response.end(JSON.stringify(config));
-    });
+    response.end(nuage.template.render(
+        __dirname + '/templates/index.html',
+        {
+            title: 'Administration',
+            username: ''
+        }
+    ));
 }
 
 exports.executeDefault = function(request, response) {

@@ -2,6 +2,7 @@
     "modules": [
         {
             "name": "user",
+            "icon": "user-module-icon",
             "display": {
                 "deu": "Benutzerverwaltung",
                 "eng": "User Administration"
@@ -40,6 +41,30 @@
                     }
                 }
             ]
-        }
+        },
+        {
+            "name": "documents",
+            "icon": "document-module-icon",
+            "display": {
+                "deu": "Dokumentenverwaltung",
+                "eng": "Document Management"
+            }
+        },
+        {
+            "name": "publication",
+            "icon": "publication-module-icon",
+            "display": {
+                "deu": "Publikationen",
+                "eng": "Publications"
+            }
+        },
+        {
+            "name": "media",
+            "icon": "media-module-icon",
+            "display": {
+                "deu": "Medien",
+                "eng": "Media"
+            }
+        }        
     ]
 }
