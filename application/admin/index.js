@@ -1,4 +1,5 @@
 var nuage = require('nuage');
+var cradle = require('cradle');
 
 exports.loginRequired = function() {
     return true;

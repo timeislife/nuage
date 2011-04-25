@@ -1,3 +1,4 @@
 {
-    "directory": "/home/stephan/host/Projects/nuage/htdocs"
+    "directory": "/home/stephan/host/Projects/nuage/htdocs",
+    "htdocs": "htdocs/"
 }

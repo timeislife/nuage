@@ -6,13 +6,28 @@ exports.loginRequired = function() {
 }
 
 exports.execute = function(request, response) {
-    response.end(nuage.template.render(
-        __dirname + '/templates/index.html',
-        {
-            title: 'Administration',
-            username: ''
-        }
-    ));
+    nuage.json.load(__dirname + '/../config/config.json', function(config) {
+        var dbConfig = nuage.getDatabaseConfig();
+
+        var database = new cradle.Connection(
+            dbConfig.host,
+            dbConfig.port,
+            {
+                auth: {
+                    username: dbConfig.username,
+                    password: dbConfig.password
+                }
+            }
+        ).database(dbConfig.name);
+
+        database.get(config.document, function(error, document) {
+            if (error) {
+                response.end('Error document administration.users not found');
+            } else {
+                response.end(JSON.stringify(document.users));
+            }
+        });
+    });
 }
 
 exports.executeDefault = function(request, response) {

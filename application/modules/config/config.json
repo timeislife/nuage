@@ -7,7 +7,19 @@
                 "deu": "Benutzerverwaltung",
                 "eng": "User Administration"
             },
+            "index": {
+                "name": "index",
+                "action": "index"
+            },
             "actions": [
+                {
+                    "name": "index",
+                    "action": "actions/index",
+                    "display": {
+                        "deu": "Index",
+                        "eng": "Index"
+                    }
+                },
                 {
                     "name": "getallusers",
                     "action": "actions/getallusers",

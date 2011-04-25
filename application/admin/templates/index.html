@@ -40,7 +40,7 @@
                    url: 'modules',
                    success: function(response) {
                        var decoded = JSON.parse(response.responseText);
-                       Ext.each(decoded.modules, function(module) {
+                       Ext.each(decoded.modules, function(module) { 
                           startMenu.add({
                                text: module.display.deu,
                                iconCls: module.icon,
@@ -51,7 +51,11 @@
                                        title: module.display.deu,
                                        collapsible: true,
                                        maximizable: true,
-                                       iconCls: module.icon
+                                       iconCls: module.icon,
+                                       autoLoad: (module.index != undefined) ? {
+                                           url: 'modules/getmodule?module='+module.name+'&action='+module.index.action,
+                                           scripts: true
+                                       } : false
 
                                    });
                                    // moduleWindows.push(window);

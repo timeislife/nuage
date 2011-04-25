@@ -1,0 +1,109 @@
+<script type="text/javascript">
+    Ext.onReady(function(){
+
+        var writer = new Ext.data.JsonWriter({
+            encode: true,
+            writeAllFields: true
+        });
+
+        var reader = new Ext.data.JsonReader(
+            {
+                totalProperty: 'total',
+                successProperty: 'success',
+                idProperty: 'username'
+            },
+            [
+                {name: 'username', allowBlank: false},
+                {name: 'firstname', allowBlank: false},
+                {name: 'lastname', allowBlank: false},
+                {name: 'role', allowBlank: true},
+                {name: 'lastLogin', allowBlank: true},
+            ]
+        );
+
+        var dataStore = new Ext.data.JsonStore({
+            url: 'modules/getmodule?module=user&action=getallusers',
+            autoLoad: true,
+            reader: reader,
+            fields: [
+                'username',
+                'firstname',
+                'lastname',
+                'role',
+                {
+                    name: 'lastLogin',
+                    type: 'date'
+                }
+            ]
+        });
+
+        var grid = new Ext.grid.EditorGridPanel({
+            store: dataStore,
+            applyTo: 'modules-user-index-content-gridPanel',
+            autoHeight: true,
+            autoWidth: true,
+            forceFit: true,
+            clicksToEdit: 1,
+            cm: new Ext.grid.ColumnModel({
+                columns: [
+                    {
+                        id       :'username',
+                        header   : 'Benutzername',
+                        width    : 120,
+                        sortable : true,
+                        dataIndex: 'username',
+                        editor: new Ext.form.TextField({
+                            allowBlank: false
+                        })
+                    },
+                    {
+                        id       :'firstname',
+                        header   : 'Vorname',
+                        width    : 120,
+                        sortable : true,
+                        dataIndex: 'firstname',
+                        editor: new Ext.form.TextField({
+                            allowBlank: false
+                        })
+                    },
+                    {
+                        id       :'lastname',
+                        header   : 'Nachname',
+                        width    : 120,
+                        sortable : true,
+                        dataIndex: 'lastname',
+                        editor: new Ext.form.TextField({
+                            allowBlank: false
+                        })
+                    },
+                    {
+                        id       :'role',
+                        header   : 'Benutzerrolle',
+                        width    : 120,
+                        sortable : true,
+                        dataIndex: 'role'
+                    },
+                    {
+                        id       :'lastlogin',
+                        header   : 'Zuletzt angemeldet',
+                        width    : 120,
+                        sortable : true,
+                        dataIndex: 'lastLogin'
+                    }
+                ]
+            }),
+            listeners: {
+                rowclick: function(g, index, ev) {
+                    var rec = g.store.getAt(index);
+                },
+                celldblclick: function(grid, row, column, ev) {
+                    
+                }
+            }
+        });
+
+    });
+</script>
+<div id="modules-user-index-content">
+    <div id="modules-user-index-content-gridPanel"></div>
+</div>
