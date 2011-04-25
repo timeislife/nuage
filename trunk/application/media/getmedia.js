@@ -9,22 +9,20 @@ exports.loginRequired = function() {
 }
 
 exports.execute = function(request, response) {
-    
     var route = nuage.getRoute(request.url);
 
     // create file path from route parameters
-    var fileName = '';
-    for (var i = 1; i < route.params.length; i++) {
-        if (i == route.params.length - 1) {
-            fileName += '.' + route.params[i];
-        } else {
-            fileName += '/' + route.params[i];
-        }
+    var fileName = route.url.href;
 
+    if (null == fileName.match(/\w+(\/\w+)*\.\w+/)) {
+        response.writeHead(404);
+        response.end('media not found');
+        return;
     }
+
     nuage.json.load(__dirname + '/config/config.json', function(config){
         var dir      = config.directory;
-        var filePath = dir + fileName;
+        var filePath = dir + fileName.replace(config.htdocs, '');
         console.log(filePath);
         path.exists(filePath, function(exists) {
             if (exists) {

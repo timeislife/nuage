@@ -20,7 +20,7 @@ exports.executeDefault = function(request, response, data) {
         }
     ]);
     if (data) {
-        var userObject = nuage.session.login(data.loginFormUsername, data.loginFormPassword, 'sha1');
+        var userObject = nuage.session.login(data.post.loginFormUsername, data.post.loginFormPassword, 'sha1');
         if (userObject != null) {
             response.writeHead(200, {
                 'Content-Type': 'text/plain',
