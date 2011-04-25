@@ -1,3 +1,6 @@
 {
-    "document": "administration.users"
+    "documents": {
+        "users": "administration.users",
+        "roles": "administration.userroles"
+    }
 }
