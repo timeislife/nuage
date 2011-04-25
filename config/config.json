@@ -5,15 +5,15 @@
         "name": "Bunnyhop"
     },
     "directories": {
-        "application": "/home/stephan/host/Projects/Easteregg/application/",
-        "libraries": "/home/stephan/host/Projects/Easteregg/libs/",
-        "modules": "/home/stephan/host/Projects/Easteregg/libs/node_modules/"
+        "application": "/home/stephan/host/Projects/nuage/application/",
+        "libraries": "/home/stephan/host/Projects/nuage/libs/",
+        "modules": "/home/stephan/host/Projects/nuage/libs/node_modules/"
     },
     "routes": [
         {
             "name": "index",
             "pattern": "^\\/$",
-            "action": "index/index.js"
+            "action": "auth/index.js"
         },
         {
             "name": "login",
@@ -39,9 +39,19 @@
             "name": "admin",
             "pattern": "\\/admin$",
             "action": "admin/index.js"
+        },
+        {
+            "name": "modules",
+            "pattern": "\\/modules$",
+            "action": "modules/getmodules.js"
+        },
+        {
+            "name": "modules_get",
+            "pattern": "\\/modules\\/getmodule$",
+            "action": "modules/getmodule.js"
         }
     ],
-    "logfile": "/home/stephan/host/Projects/Easteregg/logs/info.log",
+    "logfile": "/home/stephan/host/Projects/nuage/logs/info.log",
     "database": {
         "name": "bunnyhopp",
         "type": "couchdb",
