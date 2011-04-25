@@ -5,7 +5,8 @@ exports.loginRequired = function() {
     return true;
 }
 
-exports.execute = function(request, response) {
+exports.execute = function(request, response, data) {
+    var newContent = JSON.parse(data.post.users);
     nuage.json.load(__dirname + '/../config/config.json', function(config) {
         var dbConfig = nuage.getDatabaseConfig();
 
@@ -19,12 +20,18 @@ exports.execute = function(request, response) {
                 }
             }
         ).database(dbConfig.name);
-            
+
         database.get(config.documents.users, function(error, document) {
             if (error) {
-                response.end('Error document administration.users not found');
+                response.end('Error document '+config.documents.users+' not found');
             } else {
-                response.end(JSON.stringify({users: document.users}));
+                database.save(config.documents.users, document._rev, {users: newContent}, function(error, result) {
+                    if (error) {
+                        response.end(error);
+                    } else {
+                         response.end('true');
+                    }
+                });
             }
         });
     });

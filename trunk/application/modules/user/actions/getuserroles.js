@@ -19,12 +19,12 @@ exports.execute = function(request, response) {
                 }
             }
         ).database(dbConfig.name);
-            
-        database.get(config.documents.users, function(error, document) {
+
+        database.get(config.documents.roles, function(error, document) {
             if (error) {
                 response.end('Error document administration.users not found');
             } else {
-                response.end(JSON.stringify({users: document.users}));
+                response.end(JSON.stringify(document));
             }
         });
     });

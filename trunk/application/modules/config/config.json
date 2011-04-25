@@ -29,11 +29,19 @@
                     }
                 },
                 {
-                    "name": "adduser",
-                    "action": "actions/adduser",
+                    "name": "getuserroles",
+                    "action": "actions/getuserroles",
                     "display": {
-                        "deu": "Benutzer hinzufügen",
-                        "eng": "Add User"
+                        "deu": "Benutzerrollen",
+                        "eng": "User roles"
+                    }
+                },
+                {
+                    "name": "updateusers",
+                    "action": "actions/updateusers",
+                    "display": {
+                        "deu": "Benutzer aktualisieren",
+                        "eng": "Update Users"
                     }
                 },
                 {

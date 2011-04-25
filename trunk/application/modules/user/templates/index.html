@@ -1,5 +1,8 @@
+<script type="text/javascript" src="htdocs/js/extjs/utils/App.js"></script>
 <script type="text/javascript">
+
     Ext.onReady(function(){
+
 
         var writer = new Ext.data.JsonWriter({
             encode: true,
@@ -16,25 +19,54 @@
                 {name: 'username', allowBlank: false},
                 {name: 'firstname', allowBlank: false},
                 {name: 'lastname', allowBlank: false},
+                {name: 'password', allowBlank: false},
                 {name: 'role', allowBlank: true},
                 {name: 'lastLogin', allowBlank: true},
             ]
         );
 
+        var writer = new Ext.data.JsonWriter({
+            encode: true,
+            writeAllFields: true // write all fields, not just those that changed
+        });
+
         var dataStore = new Ext.data.JsonStore({
             url: 'modules/getmodule?module=user&action=getallusers',
             autoLoad: true,
             reader: reader,
+            writer: writer,
+            autoSave: false,
+            root: 'users',
+            proxy : new Ext.data.HttpProxy({
+                method: 'POST',
+                prettyUrls: false,
+                url: 'modules/getmodule?module=user&action=getallusers', // see options parameter for Ext.Ajax.request
+                api: {
+                    // all actions except the following will use above url
+                    read    : 'modules/getmodule?module=user&action=getallusers',
+                    create  : 'modules/getmodule?module=user&action=updateusers',
+                    update  : 'modules/getmodule?module=user&action=updateusers'
+                }
+            }),
             fields: [
                 'username',
                 'firstname',
                 'lastname',
+                'password',
                 'role',
                 {
                     name: 'lastLogin',
                     type: 'date'
                 }
-            ]
+            ],
+            listeners: {
+                update: function() {
+                    Ext.getCmp('modules-user-index-content-gridPanel-accept-button').enable();
+                },
+                save: function(store, batch, data) {
+                    debugger;
+                }
+            }
         });
 
         var grid = new Ext.grid.EditorGridPanel({
@@ -44,6 +76,7 @@
             autoWidth: true,
             forceFit: true,
             clicksToEdit: 1,
+            forceValidation: true,
             cm: new Ext.grid.ColumnModel({
                 columns: [
                     {
@@ -77,6 +110,17 @@
                         })
                     },
                     {
+                        id       :'password',
+                        header   : 'Passwort',
+                        width    : 120,
+                        sortable : true,
+                        dataIndex: 'password',
+                        editor: new Ext.form.TextField({
+                            allowBlank: false
+                        }),
+                        hidden: true
+                    },
+                    {
                         id       :'role',
                         header   : 'Benutzerrolle',
                         width    : 120,
@@ -90,6 +134,42 @@
                         sortable : true,
                         dataIndex: 'lastLogin'
                     }
+                ]
+            }),
+            tbar: new Ext.Toolbar({
+                items: [
+                    {
+                        iconCls: 'add-small-icon',
+                        text: 'Hinzufügen',
+                        id: 'modules-user-index-content-gridPanel-add-button',
+                        handler: function() {
+                            var u = new dataStore.recordType({
+                                username : '',
+                                firstname : '',
+                                lastname: '',
+                                password : 'x',
+                                role: 'admin',
+                                lastLogin: new Date(Date.now()).toString()
+                            });
+                            grid.stopEditing();
+                            dataStore.insert(0, u);
+                            grid.startEditing(0, 0);
+                        }
+                    },
+                    {
+                        iconCls: 'delete-small-icon',
+                        text: 'Löschen',
+                        id: 'modules-user-index-content-gridPanel-delete-button'
+                    },
+                    {
+                        iconCls: 'accept-small-icon',
+                        text: 'Änderungen übernehmen',
+                        id: 'modules-user-index-content-gridPanel-accept-button',
+                        disabled: true,
+                        handler: function() {
+                            dataStore.save();
+                        }
+                    },
                 ]
             }),
             listeners: {
